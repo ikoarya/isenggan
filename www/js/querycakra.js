@@ -61,7 +61,7 @@
          	db.transaction(function(tx){
 				
 
-				tx.executeSql('create table if not exists AKUN( ID integer primary key autoincrement, NAMA varchar(30) not null, TTL datetime not null, JK char(1) not null, LINKFOTO varchar(40) not null)', [],nullHandler,errorHandler);
+				tx.executeSql('create table if not exists AKUN( ID integer primary key autoincrement, NAMA varchar(30) not null, TTL datetime not null, JK char(1) not null, LINKFOTO varchar(40))', [],nullHandler,errorHandler);
 
 	            tx.executeSql('CREATE TABLE IF NOT EXISTS CATATAN(ID_CATATAN integer, tanggal DATETIME not null, catatanku text, countcatatan integer, FOREIGN KEY (ID_CATATAN) REFERENCES AKUN (ID))', [],nullHandler,errorHandler);
 
@@ -158,6 +158,7 @@ function filterquery(){
          	db.transaction(function(transaction){
          		transaction.executeSql('INSERT INTO AKUN(NAMA, TTL, JK, LINKFOTO) VALUES (?,?,?,?)',[$('#name').val(), getBirth, $('#jk').val(),link ],nullHandler,errorHandler);
          	});
+          window.location.href = "index.html";
 		}
 
 
@@ -314,6 +315,7 @@ var row;
 
 function GetPicture(){
 
+      alert('masuk picture');
        if (!window.openDatabase) {
         alert('Databases are not supported in this browser.');
         return;
@@ -329,6 +331,7 @@ function GetPicture(){
 
             if (result != null && result.rows != null) {
                 var row = result.rows.item(0);
+                alert(row.LINKFOTO);
                 $('#gambar').append('background-image', 'url(' + row.LINKFOTO +')');
             }
            },errorHandler);
