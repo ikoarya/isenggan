@@ -151,8 +151,8 @@ function filterquery(){
           var tah = document.getElementById('tah').value;
 
           var getBirth = tanggal + ' - ' + bul + ' - '+ tah;
-          var link = pathimage;
-          alert(link);
+          var link = "pathimage";
+          alert("Aku adalah link " + link);
           sessionStorage.setItem('BirthDate', getBirth);
 
 
@@ -213,7 +213,6 @@ function filterquery(){
             
             var monthBirth = parseInt(thnlahir[panjang-9] + thnlahir[panjang-8]);
             var yearBirth = parseInt(thnlahir[panjang-4] + thnlahir[panjang-3] + thnlahir[panjang-2] + thnlahir[panjang-1]);
-            alert(monthBirth);
 
             var now = new Date();
             var monthNow = now.getMonth();
@@ -316,24 +315,24 @@ var row;
 
 function GetPicture(){
 
-      alert('masuk picture');
+      
        if (!window.openDatabase) {
         alert('Databases are not supported in this browser.');
         return;
       }
 
       RunBody();
-      $('#gambar').css('');
+      //$("#gambar").css("");
        
        db.transaction(function(transaction) {
-
+        alert('masuk picture lebih dalam');
          transaction.executeSql('SELECT LINKFOTO FROM AKUN ;',  [],
            function(transaction, result) {
 
             if (result != null && result.rows != null) {
                 var row = result.rows.item(0);
-                alert(row.LINKFOTO);
-                $('#gambar').append('background-image', 'url(' + row.LINKFOTO +')');
+                alert('Aku adalah link di dalam '+row.LINKFOTO);
+                $('#gambar').css('background-image', 'url("' + row.LINKFOTO +'")');
             }
            },errorHandler);
        },errorHandler,nullHandler);
