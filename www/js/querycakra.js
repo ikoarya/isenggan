@@ -2,21 +2,18 @@
     Versi 2
 
     Upgrade:
-  v  a. Tambah kolom path gambar pada tabel user
-  v  b. Tambah GetJmlAkun
-  v  c. Tambah GetPicture
-  v  d. Penyesuaian Halaman Pendaftaran   ==> EntryUser()
-  v  e. Penyesuaian Halaman Utama  ==> HalamanUtama(), dan hitungUmur dan GetPicture
-  v  f. Penyesuaian Halaman Terapi
-  v  g. Penyesuaian Halaman evaluasi    ==> tesEvaluasi()
-  v h. Penyesuaian Halaman Display Evaluasi   ==> DisplayEvaluasi()
-  v  i. Penyesuaian Halaman Pengaturan
-  v  j. Penyesuaian Halaman Login
+    a. Tambah kolom path gambar pada tabel user
+    b. Tambah GetJmlAkun
+    c. Tambah GetPicture
+    d. Penyesuaian Halaman Pendaftaran   ==> EntryUser()
+    e. Penyesuaian Halaman Utama  ==> HalamanUtama(), dan hitungUmur dan GetPicture
+    f. Penyesuaian Halaman Terapi  ==> penambahan fitur pilihan (penyesuaian dengan pilihan)
+    g. Penyesuaian Halaman evaluasi    ==> tesEvaluasi()
+    h. Penyesuaian Halaman Display Evaluasi   ==> DisplayEvaluasi()
+    i. Penyesuaian Halaman Pengaturan
+    j. Penyesuaian Halaman Login
     
 */
-
-
-
 
       var db;
 	    var shortName = 'Cakra';
@@ -595,23 +592,6 @@ function DisplayEval(){
 
   }
 
-//=============================================== masukkan pertanyaan =================================================
-
-		function EntryQuestion(){
-
-			//field dinamakan kategsoal dan soal
-
-			//alert("DEBUGGING: we are in the EntryQuestion() function");
-
-	    	if (!window.openDatabase) {
-	           alert('Databases are not supported in this browser.');
-	           return;
-         	}
-
-         	db.transaction(function(transaction){
-         		transaction.executeSql('INSERT INTO PERTANYAAN(KATEGORI_TANYA, SOAL) VALUES (?,?)',[$('#kategsoal').val(), $('#soal').val()],nullHandler,errorHandler);
-         	});
-		}
 
 
 
