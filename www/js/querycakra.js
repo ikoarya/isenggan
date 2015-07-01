@@ -151,7 +151,7 @@ function filterquery(){
           var tah = document.getElementById('tah').value;
 
           var getBirth = tanggal + ' - ' + bul + ' - '+ tah;
-          var link = "pathimage";
+          var link = pathimage;
           alert("Aku adalah link " + link);
           sessionStorage.setItem('BirthDate', getBirth);
 
