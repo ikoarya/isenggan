@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <link rel="stylesheet" href="css/daftar.css" />
+        <script type="text/javascript" src="libs/fastclick.min.js"></script>
+        <script type="text/javascript" src="js/daftar.js"></script>
+        <!--<script src="cordova.js"></script>-->
+        <script src="lib/ionic/js/ionic.bundle.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/services.js"></script>
+        <title>Cakra</title>
+    </head>
+    <body ng-app="starter" ng-controller="MainCtrl" class="pendaftaran">
+        <div id="app">
+            <div data-role="content" class="formstyle">
+                <h1>Tuliskan Identitas</h1>
+                <table width="100%" class="daftar" border="1">
+                    <tr>
+                        <td width="70%">   
+                            <div id="menu" method="post" class="formstyle">
+                                <label>
+                                    <span> Nama </span>
+                                    <input type="text" data-theme="d" name="nama" id="nama" data-mini="true"/>
+                                </label>
+
+                                <label>
+                                    <span>Tanggal Lahir</span>
+                                    <input type="date" data-theme="d" name="nama" id="nama" data-mini="true"/>
+                                </label>
+                            
+                                <label>
+                                    <span>Jenis Kelamin</span>
+                                    <select name="jeniskelamin" value="pilih">
+                                        <option value="laki">Laki-Laki</option>
+                                        <option value="perempuan">Perempuan</option>
+                                    </select>
+                                </label>
+
+                                <label>
+                                    <span>Foto</span>
+                                    <div class="image-upload">
+                                        <label for="file-input">
+                                            <img src="img/Daftar/cari.png"/>
+                                        </label>
+                                        <input id="file-input" type="file"/>
+                                    </div>
+                                        
+                                    <div class='kamera' style="background-color:white; color:black; ">
+                                        <input type="submit"  ng-click="getPhoto()" class="button-add2" value="" ><br>Kamera
+                                    </div>    
+                                </label>
+                            </div>
+                        </td>
+                        <!-- Camera -->
+                        <td width="30%">
+                              <img ng-src="{{lastPhoto}}" style="max-width: 80%">
+                        </td>
+                    </tr>
+                </table>
+                <div class="selesai">
+                    <button class="butt" align="right" style="background-color:pink; height:40px; width: 80px; padding: 20px; ">Selesai</button>
+                </div>            
+            </div>
+        </div>
+    </body>
+</html>

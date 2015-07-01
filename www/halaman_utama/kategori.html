@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>SLIDE DEMO</title>
+		<link href="../css/level.css" rel="stylesheet" type="text/css"  />
+		<!--
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"  />
+		<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+		-->
+		<script src="../js/jQuery-2.1.3.min.js"></script>
+		<script src="../js/flowtype.js"></script>
+		<script>
+			$(document).ready(function () {
+				$(".hidden4").toggle('fadeIn');
+				$(".hidden5").toggle('fadeIn');
+			});
+		</script>
+	</head>
+
+	<body>
+		<div class="hidden4">
+		<img class="select" src="../img/Terapi/selectedkategori.png" />
+			<div class="toggle4">
+				<div class="tahap4">
+					<p>Terapi <br>Freemode</p>
+					<div class="footer redFooter">Cocok untuk terapis - Dapat memilih modul terapi - Dapat memilih konten modul - Terdapat modul pembelajaran - Merekap skor benar dan salah terapi
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="hidden5">
+		<img class="select" src="../img/Terapi/selectedkategori.png" />
+			<div class="toggle5">
+				<div class="tahap5">
+					<p>Terapi <br>Terstruktur</p>
+					<div class="footer greenFooter">Cocok untuk orang tua - Pemilihan modul terapi dan konten modul otomatis - Hanya terdapat modul latihan - Merekap progres perkembangan per modul - Single click
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$('body').flowtype({fontRatio: 1.5, maxFont: 50});
+		</script>
+	</body>
+</html>
