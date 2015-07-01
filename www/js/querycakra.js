@@ -7,9 +7,9 @@
   v  c. Tambah GetPicture
   v  d. Penyesuaian Halaman Pendaftaran   ==> EntryUser()
   v  e. Penyesuaian Halaman Utama  ==> HalamanUtama(), dan hitungUmur dan GetPicture
-    f. Penyesuaian Halaman Terapi
-    g. Penyesuaian Halaman evaluasi    ==> tesEvaluasi()
-    h. Penyesuaian Halaman Display Evaluasi   ==> DisplayEvaluasi()
+  v  f. Penyesuaian Halaman Terapi
+  v  g. Penyesuaian Halaman evaluasi    ==> tesEvaluasi()
+  v h. Penyesuaian Halaman Display Evaluasi   ==> DisplayEvaluasi()
   v  i. Penyesuaian Halaman Pengaturan
   v  j. Penyesuaian Halaman Login
     
@@ -392,59 +392,182 @@ function GetPicture(){
 //sistem kerjanya pake passing parameter, jadi parameter variable hasil evaluasi di pass ke fungsinya.
 //nanti hasil dari evaluasi di simpan dulu dan di tampilkan .
 
-  function tesEvaluasi(kom, sos, kog, keb){
+  function tesEvaluasi(kom, sos, kog, keb, tot){
 
       var now = new Date();
       var monthNow = now.getMonth();
       var yearNow = now.getFullYear();
-      var datenow = now.getDate();
+      var dateNow = now.getDate();
 
       var waktu = dateNow + '-' + monthNow + '-' + yearNow;
 
       db.transaction(function(transaction){
 
-          getNama();
+          
 
-          transaction.executeSql('INSERT INTO LAPORAN(waktu, komunikasi, sosial, kognitif, kebiasaan, total) VALUES (?,?,?,?,?,?)',[waktu, kom, sos, kog, keb],nullHandler,errorHandler);
+          transaction.executeSql('INSERT INTO LAPORAN(waktu, komunikasi, sosial, kognitif, kebiasaan, total) VALUES (?,?,?,?,?,?)',[waktu, kom, sos, kog, keb, tot],nullHandler,errorHandler);
 
-          transaction.executeSql('SELECT komunikasi, sosial, kognitif, kebiasaan  FROM LAPORAN ;',  [],
-             function(transaction, result) {
-
-              if (result != null && result.rows != null) {
-                var last = result.rows.length;
-                  var row = result.rows.item(last-1);
-                  var komResult = row.komunikasi;
-                  var sosResult = row.sosial;
-                  var kogResult = row.kognitif;
-                  var kebResult = row.kebiasaan;
-                  alert(komResult);
-                  alert(sosResult);
-                  alert(kogResult);
-                  alert(kebResult);
-              }
-             },errorHandler);
+          
       });
   }
+
+//===================================================== Display Evaluasi=================================================
+
+function DisplayEval(){
+  
+  getNama();
+ $('#hasilKom').html('');
+ $('#hasilSos').html('');
+ $('#hasilKog').html('');
+ $('#hasilKeb').html('');
+ 
+ db.transaction(function(transaction) {
+  transaction.executeSql('SELECT komunikasi, sosial, kognitif, kebiasaan, total  FROM LAPORAN ;',  [],
+               function(transaction, result) {
+
+                if (result != null && result.rows != null) {
+                  var last = result.rows.length;
+                    var row = result.rows.item(last-1);
+                    var komResult = row.komunikasi;
+                    var sosResult = row.sosial;
+                    var kogResult = row.kognitif;
+                    var kebResult = row.kebiasaan;
+
+                    $('#hasilKom').append(parseInt(100-row.komunikasi*100/28) + '%');
+                    $('#hasilSos').append(parseInt(100-row.sosial*100/40) + '%');
+                    $('#hasilKog').append(parseInt(100-row.kognitif*100/36) + '%');
+                    $('#hasilKeb').append(parseInt(100-row.kebiasaan*100/75) + '%');
+                }
+               },errorHandler);
+  },errorHandler,nullHandler);
+}
+
+
 
 
 //=================================================== Terapi =========================================================================
 
-  function terapi(){
-
+  function terapi(bro){
+      var bre = bro;
+      
        RunBody();
 
+        
+        document.getElementById("tabel1").style.display = 'none';
+        document.getElementById("tabel2").style.display = 'none';
+        document.getElementById("tabel3").style.display = 'none';
+        document.getElementById("tabel4").style.display = 'none';
+        document.getElementById("tabel5").style.display = 'none';
+
+        var node = document.getElementById('tabel1');
+        while(node.hasChildNodes()){
+          node.removeChild(node.firstChild);
+        }
+
+        var node = document.getElementById('tabel2');
+        while(node.hasChildNodes()){
+          node.removeChild(node.firstChild);
+        }
+
+        var node = document.getElementById('tabel3');
+        while(node.hasChildNodes()){
+          node.removeChild(node.firstChild);
+        }
+
+        var node = document.getElementById('tabel4');
+        while(node.hasChildNodes()){
+          node.removeChild(node.firstChild);
+        }
+
+        var node = document.getElementById('tabel5');
+        while(node.hasChildNodes()){
+          node.removeChild(node.firstChild);
+        }
+        
+
+       if(bre==1){
+        document.getElementById("tabel1").style.display = '';
        db.transaction(function(transaction) {
-         transaction.executeSql('SELECT ID_TERAPI,LEVEL,PILIHAN,KATEGORI_TANYATERAPI FROM TERAPI ;',  [],
+         transaction.executeSql('SELECT ID_TERAPI,LEVEL,PILIHAN,KATEGORI_TANYATERAPI FROM TERAPI WHERE KATEGORI_TANYATERAPI="Belajar" And LEVEL="Dasar"  ;',  [],
+           function(transaction, result) {
+              flag++;
+
+              if (result != null && result.rows != null) {
+                  for (var i = 0; i < result.rows.length; i++) {
+                    var row = result.rows.item(i);
+                    $('#tabel1').append('<tr><td onClick="linkPetTerapi(\''+row.LEVEL+row.KATEGORI_TANYATERAPI+row.PILIHAN+'\')">' + row.PILIHAN + '</td><td><img src="img/menu/'+  row.PILIHAN+'.png"></td></tr>');
+                  }
+                }
+           },errorHandler);
+       },errorHandler,nullHandler);
+
+        }
+
+       if(bre==2){
+        document.getElementById("tabel2").style.display = '';
+       db.transaction(function(transaction) {
+         transaction.executeSql('SELECT ID_TERAPI,LEVEL,PILIHAN,KATEGORI_TANYATERAPI FROM TERAPI WHERE KATEGORI_TANYATERAPI="Identifikasi(1)" And LEVEL="Dasar" ;',  [],
            function(transaction, result) {
 
               if (result != null && result.rows != null) {
                   for (var i = 0; i < result.rows.length; i++) {
                     var row = result.rows.item(i);
-                    $('#cobaterapi').append('<tr><td onClick="linkPetTerapi('+ row.ID_TERAPI + ')">' + row.LEVEL  + '</td><td>' + row.PILIHAN + '</a></td><td><img src="img/'+ row.KATEGORI_TANYATERAPI+'.png"></td></tr>');
+                    $('#tabel2').append('<tr><td onClick="linkPetTerapi(\''+row.LEVEL+row.KATEGORI_TANYATERAPI+row.PILIHAN+'\')">' + row.PILIHAN + '</td><td><img src="img/menu/'+  row.PILIHAN+'.png"></td></tr>');
                   }
                 }
            },errorHandler);
        },errorHandler,nullHandler);
+     }
+
+       if(bre==3){
+        document.getElementById("tabel3").style.display = '';
+       db.transaction(function(transaction) {
+         transaction.executeSql('SELECT ID_TERAPI,LEVEL,PILIHAN,KATEGORI_TANYATERAPI FROM TERAPI WHERE KATEGORI_TANYATERAPI="Identifikasi(2)" And LEVEL="Dasar" ;',  [],
+           function(transaction, result) {
+
+              if (result != null && result.rows != null) {
+                  for (var i = 0; i < result.rows.length; i++) {
+                    var row = result.rows.item(i);
+                    $('#tabel3').append('<tr><td onClick="linkPetTerapi(\''+row.LEVEL+row.KATEGORI_TANYATERAPI+row.PILIHAN+'\')">' + row.PILIHAN + '</td><td><img src="img/menu/'+  row.PILIHAN+'.png"></td></tr>');
+                  }
+                }
+           },errorHandler);
+       },errorHandler,nullHandler);
+     }
+
+       if(bre==4){
+        document.getElementById("tabel4").style.display = '';
+       db.transaction(function(transaction) {
+         transaction.executeSql('SELECT ID_TERAPI,LEVEL,PILIHAN,KATEGORI_TANYATERAPI FROM TERAPI WHERE KATEGORI_TANYATERAPI="Melabel" And LEVEL="Dasar" ;',  [],
+           function(transaction, result) {
+
+              if (result != null && result.rows != null) {
+                  for (var i = 0; i < result.rows.length; i++) {
+                    var row = result.rows.item(i);
+                    $('#tabel4').append('<tr><td onClick="linkPetTerapi(\''+row.LEVEL+row.KATEGORI_TANYATERAPI+row.PILIHAN+'\')">' + row.PILIHAN + '</td><td><img src="img/menu/'+  row.PILIHAN+'.png"></td></tr>');
+                  }
+                }
+           },errorHandler);
+       },errorHandler,nullHandler);
+     }
+
+       if(bre==5){
+        document.getElementById("tabel5").style.display = '';
+       db.transaction(function(transaction) {
+         transaction.executeSql('SELECT ID_TERAPI,LEVEL,PILIHAN,KATEGORI_TANYATERAPI FROM TERAPI WHERE KATEGORI_TANYATERAPI="Matching" And LEVEL="Dasar" ;',  [],
+           function(transaction, result) {
+
+              if (result != null && result.rows != null) {
+                  for (var i = 0; i < result.rows.length; i++) {
+                    var row = result.rows.item(i);
+                    $('#tabel5').append('<tr><td onClick="linkPetTerapi(\''+row.LEVEL+row.KATEGORI_TANYATERAPI+row.PILIHAN+ '\')">' + row.PILIHAN + '</td><td><img src="img/menu/'+  row.PILIHAN+'.png"></td></tr>');
+                  }
+                }
+           },errorHandler);
+       },errorHandler,nullHandler);
+      }
+     
+
   }
   
      
@@ -452,9 +575,12 @@ function GetPicture(){
 
   function linkPetTerapi(a){
 
-      linkPT = a;
+
+
+      linkPT = a;  
       sessionStorage.setItem('pilihan', linkPT);
-      window.location.href = "petterapi.html";
+      //alert(linkPT +'.html');
+      window.location.href = linkPT +'.html';
       
   }
 
