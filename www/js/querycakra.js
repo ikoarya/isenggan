@@ -152,13 +152,14 @@ function filterquery(){
 
           var getBirth = tanggal + ' - ' + bul + ' - '+ tah;
           var link = pathimage;
+          alert(link);
           sessionStorage.setItem('BirthDate', getBirth);
 
 
          	db.transaction(function(transaction){
          		transaction.executeSql('INSERT INTO AKUN(NAMA, TTL, JK, LINKFOTO) VALUES (?,?,?,?)',[$('#name').val(), getBirth, $('#jk').val(),link ],nullHandler,errorHandler);
          	});
-          window.location.href = "index.html";
+          //window.location.href = "index.html";
 		}
 
 
